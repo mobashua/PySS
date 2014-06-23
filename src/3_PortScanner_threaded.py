@@ -19,8 +19,9 @@ def connScan(tgtHost, tgtPort):
         arguments
         Print and close the socket
     """
+    
+    connSocket = socket(AF_INET, SOCK_STREAM)
     try:
-        connSocket = Socket(AF_INET, SOCK_STREAM)
         connSocket.connect((tgtHost, tgtPort))
         connSocket.send('ViolentPython\r\n')
         results = connSocket.recv(100)
@@ -32,7 +33,7 @@ def connScan(tgtHost, tgtPort):
         print "[-]%d/tcp closed " %tgtPort
     finally:
         screenLock.release()
-        connSkt.close
+        connSocket.close()
         
 def portScan(tgtHost, tgtPorts):
     """
@@ -75,7 +76,7 @@ def main():
         print "[-] You must specify a target host and port[s]"
         exit(0) 
     # Launch of the program itself
-    print tgtHost, tgtPorts
+    # print tgtHost, tgtPorts
     portScan(tgtHost, tgtPorts)
 
 if __name__ == '__main__':
