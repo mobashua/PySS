@@ -5,7 +5,7 @@ import argparse
 
 """
     Port scanner with nmap
-    
+
 
 """
 
@@ -35,6 +35,6 @@ def main():
     # Launch of the program itself
     for tgtPort in tgtPorts:
         nmapScan(tgtHost, tgtPort)
-        
+
 if __name__ == '__main__':
     main()

@@ -1,5 +1,5 @@
 # lib for parsing the arguments given at the launch of the script
-import argparse 
+import argparse
 # lib for the socket
 from socket import *
 # lib for the threads
@@ -8,7 +8,7 @@ from threading import *
 """
     Port Scanner using threads
     *Notice the use of the semaphore in order to attribute a kind of
-    order 
+    order
 """
 
 screenLock = Semaphore(value=1)
@@ -19,8 +19,9 @@ def connScan(tgtHost, tgtPort):
         arguments
         Print and close the socket
     """
+
+    connSocket = socket(AF_INET, SOCK_STREAM)
     try:
-        connSocket = Socket(AF_INET, SOCK_STREAM)
         connSocket.connect((tgtHost, tgtPort))
         connSocket.send('ViolentPython\r\n')
         results = connSocket.recv(100)
@@ -32,13 +33,13 @@ def connScan(tgtHost, tgtPort):
         print "[-]%d/tcp closed " %tgtPort
     finally:
         screenLock.release()
-        connSkt.close
-        
+        connSocket.close
+
 def portScan(tgtHost, tgtPorts):
     """
         Given a host, and a list of ports to look into,
         this function scans all the ports of the given host,
-        and print the resultats        
+        and print the resultats
     """
     try:
         tgtIP = gethostbyname(tgtHost)
@@ -55,17 +56,17 @@ def portScan(tgtHost, tgtPorts):
     for tgtPort in tgtPorts:
         t = Thread(target=connScan, args=(tgtHost, int(tgtPort)))
         t.start()
-        
+
 def main():
     """
         Takes the arguments and launches the function portScan, if
         the args are given.
     """
-    
+
     parser = argparse.ArgumentParser()
     parser.add_argument('-H', help='A host(number or figure)')
     parser.add_argument('-p', help='A list of ports to be scanned',nargs='+')
-    
+
     args=parser.parse_args()
     tgtHost = args.H
     tgtPorts = args.p
@@ -73,7 +74,7 @@ def main():
 
     if(tgtHost == None) or (tgtPorts == None):
         print "[-] You must specify a target host and port[s]"
-        exit(0) 
+        exit(0)
     # Launch of the program itself
     print tgtHost, tgtPorts
     portScan(tgtHost, tgtPorts)
