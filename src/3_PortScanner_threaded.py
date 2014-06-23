@@ -19,7 +19,11 @@ def connScan(tgtHost, tgtPort):
         arguments
         Print and close the socket
     """
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> d95afaa239c4217d4b7ca52abb5214777b700549
     connSocket = socket(AF_INET, SOCK_STREAM)
     try:
         connSocket.connect((tgtHost, tgtPort))
@@ -33,8 +37,13 @@ def connScan(tgtHost, tgtPort):
         print "[-]%d/tcp closed " %tgtPort
     finally:
         screenLock.release()
+<<<<<<< HEAD
         connSocket.close
 
+=======
+        connSocket.close()
+        
+>>>>>>> d95afaa239c4217d4b7ca52abb5214777b700549
 def portScan(tgtHost, tgtPorts):
     """
         Given a host, and a list of ports to look into,
@@ -76,7 +85,7 @@ def main():
         print "[-] You must specify a target host and port[s]"
         exit(0)
     # Launch of the program itself
-    print tgtHost, tgtPorts
+    # print tgtHost, tgtPorts
     portScan(tgtHost, tgtPorts)
 
 if __name__ == '__main__':
